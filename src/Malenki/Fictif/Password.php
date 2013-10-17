@@ -1,7 +1,42 @@
 <?php
+/*
+Copyright (c) 2013 Michel Petit <petit.michel@gmail.com>
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+
+
 
 namespace Malenki\Fictif;
 
+
+
+/**
+ * Generate custom password 
+ * 
+ * Password can have minimum and maximum size, can use letters, digits, 
+ * together or not, with other custom chars…
+ *
+ * @author Michel Petit <petit.michel@gmail.com>
+ * @license MIT
+ */
 class Password
 {
     protected $int_minimum = 5;
@@ -10,6 +45,14 @@ class Password
 
 
 
+    /**
+     * Constructor.
+     *
+     * Initialize default range of characters to generate password 
+     * 
+     * @access public
+     * @return void
+     */
     public function __construct()
     {
         $this->arr_allow = array_merge(
@@ -21,9 +64,16 @@ class Password
 
 
 
-    public function minimum($int)
+    /**
+     * Set custom minimum size for the password.
+     * 
+     * @param integer $int 
+     * @access public
+     * @return Password
+     */
+    public function minimum($int = 5)
     {
-        if($int <= 0)
+        if(!is_integer($int) || $int <= 0)
         {
             throw new \InvalidArgumentException('Minimum size must be a positive number');
         }
@@ -34,9 +84,16 @@ class Password
 
 
 
-    public function maximum($int)
+    /**
+     * Set custom maximum size for the password
+     * 
+     * @param integer $int 
+     * @access public
+     * @return Password
+     */
+    public function maximum($int = 20)
     {
-        if($int < $this->int_minimum)
+        if(!is_integer($int) || $int < $this->int_minimum)
         {
             throw new \InvalidArgumentException('Maximum size must be greater than minimum size.');
         }
@@ -52,9 +109,19 @@ class Password
 
 
 
+    /**
+     * Set fixed size for the password.
+     *
+     * One single size only for the password, the same as setting minimum and 
+     * maximum size at the same value. 
+     * 
+     * @param integer $int 
+     * @access public
+     * @return Password
+     */
     public function fixedSize($int)
     {
-        if($int <= 0)
+        if(!is_integer($int) || $int <= 0)
         {
             throw new \InvalidArgumentException('Fixed size must be a positive number.');
         }
@@ -67,6 +134,15 @@ class Password
 
 
 
+    /**
+     * Add other allowed characters to generate password.
+     *
+     * You can add other chars by array of chars or a string.
+     *
+     * @param mixed $mix 
+     * @access public
+     * @return Password
+     */
     public function allowThis($mix)
     {
         if(is_array($mix))
@@ -112,6 +188,12 @@ class Password
 
 
 
+    /**
+     * The password will contain only digits. 
+     * 
+     * @access public
+     * @return Password
+     */
     public function onlyDigits()
     {
         $this->arr_allow = range(0, 9);
@@ -120,6 +202,12 @@ class Password
 
 
 
+    /**
+     * The password will contain only letters. 
+     * 
+     * @access public
+     * @return Password
+     */
     public function onlyLetters()
     {
         $this->arr_allow = array_merge(
@@ -131,6 +219,12 @@ class Password
 
 
 
+    /**
+     * Generate one password string. 
+     * 
+     * @access public
+     * @return string
+     */
     public function generateOne()
     {
         $str_out = '';
@@ -145,8 +239,20 @@ class Password
 
 
 
+    /**
+     * Generate several passwords returned into and array. 
+     * 
+     * @param integer $amount Number of password to generate
+     * @access public
+     * @return array
+     */
     public function generateMany($amount)
     {
+        if(!is_integer($amount) || $amout <= 0)
+        {
+            throw new \InvalidArgumentException('Amount must be a positive number.');
+        }
+
         $arr_out = array();
 
         for($i = 0; $i < $amount; $i++)
