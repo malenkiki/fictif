@@ -248,7 +248,7 @@ class Password
      */
     public function generateMany($amount)
     {
-        if(!is_integer($amount) || $amout <= 0)
+        if(!is_integer($amount) || $amount <= 0)
         {
             throw new \InvalidArgumentException('Amount must be a positive number.');
         }
