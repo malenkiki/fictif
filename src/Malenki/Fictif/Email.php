@@ -23,9 +23,230 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 
+
 namespace Malenki\Fictif;
 
+
+
+/**
+ * Generate email following some rules. 
+ * 
+ * @author Michel Petit <petit.michel@gmail.com> 
+ * @license MIT
+ */
 class Email
 {
+    protected $arr_domain = array(
+        'truc',
+        'machin',
+        'chose',
+        'chouette',
+        'bidule',
+        'foo',
+        'bar'
+    );
+
+    protected $arr_ext = array('fr', 'eu', 'com', 'org', 'net', 'it', 'de', 'pt', 'el', 'es', 'be', 'pl', 'ru');
+
+    protected $str_account = null;
+    
+    protected $str_domain = null;
+    
+    protected $str_ext = null;
+
+
+
+    /**
+     * Set account, usefull into bulk with other data.
+     *
+     * This is only usefull for bulk generation, with other data you could take 
+     * to use in email, e.g. first and last name.
+     * 
+     * @param string $str 
+     * @access public
+     * @return Email
+     */
+    public function setAccount($str)
+    {
+        if(is_string($str) && strlen(trim($str)))
+        {
+            $this->str_account = trim($str);
+        }
+        else
+        {
+            throw new \InvalidArgumentException('Blahblah to do');
+        }
+
+        return $this;
+    }
+
+
+
+    /**
+     * Add other domains to the defaults.
+     * 
+     * @param array $arr 
+     * @access public
+     * @return Email
+     */
+    public function allowThisDomain(array $arr)
+    {
+        $this->arr_domain = array_merge($this->arr_domain, $arr);
+
+        return $this;
+    }
+
+
+
+    /**
+     * Add other extensions to the defaults.
+     * 
+     * @param array $arr 
+     * @access public
+     * @return Email
+     */
+    public function allowThisExt(array $arr)
+    {
+        $this->arr_ext = array_merge($this->arr_ext, $arr);
+
+        return $this;
+    }
+
+
+
+    /**
+     * Fix domain to a custom value.
+     * 
+     * @param string $str 
+     * @access public
+     * @return Email
+     */
+    public function setDomain($str)
+    {
+        if(is_string($str) && strlen(trim($str)))
+        {
+            $this->str_domain = trim($str);
+        }
+        else
+        {
+            throw new \InvalidArgumentException('Blahblah to do');
+        }
+
+        return $this;
+    }
+
+
+
+    /**
+     * Fix extension to a custom value 
+     * 
+     * @param string $str 
+     * @access public
+     * @return Email
+     */
+    public function setExt($str)
+    {
+        if(is_string($str) && strlen(trim($str)))
+        {
+            $this->str_ext = trim($str);
+        }
+        else
+        {
+            throw new \InvalidArgumentException('Blahblah to do');
+        }
+
+        return $this;
+    }
+
+
+
+    /**
+     * Create email as a string. 
+     * 
+     * @access public
+     * @return string
+     */
+    public function generateOne()
+    {
+        if(is_null($this->str_account))
+        {
+            $p = new Password();
+
+            if(rand(0, 1))
+            {
+                $str_account = sprintf(
+                    '%s.%s',
+                    $p->minimum(1)->maximum(7)->generateOne(),
+                    $p->minimum(1)->maximum(7)->generateOne()
+                );
+            }
+            else
+            {
+                $str_account = $p->minimum(5)
+                    ->maximum(12)
+                    ->generateOne();
+            }
+        }
+        else
+        {
+            $str_account = $this->str_account;
+        }
+
+
+        if(is_null($this->str_domain))
+        {
+            $str_domain = $this->arr_domain[array_rand($this->arr_domain)];
+        }
+        else
+        {
+            $str_domain = $this->str_domain;
+        }
+
+
+        if(is_null($this->str_ext))
+        {
+            $str_ext = $this->arr_ext[array_rand($this->arr_ext)];
+        }
+        else
+        {
+            $str_ext = $this->str_ext;
+        }
+
+        return mb_strtolower(
+            sprintf(
+                '%s@%s.%s',
+                $str_account,
+                $str_domain,
+                $str_ext
+            ),
+            'UTF-8'
+        );
+    }
+
+
+
+    /**
+     * Create several emails
+     * 
+     * @param mixed $amount 
+     * @access public
+     * @return array
+     */
+    public function generateMany($amount)
+    {
+        if(!is_numeric($amount) || $amount < 1)
+        {
+            throw new \InvalidArgumentException('blahblah to do');
+        }
+
+        $arr_out = array();
+
+        for($i = 0; $i < $amount; $i++)
+        {
+            $arr_out[] = $this->generateOne();
+        }
+
+        return $arr_out;
+    }
 }
 
