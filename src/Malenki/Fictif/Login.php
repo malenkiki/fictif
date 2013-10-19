@@ -23,14 +23,33 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 
+
 namespace Malenki\Fictif;
 
+
+
+/**
+ * Create some fake logins. 
+ * 
+ * @author Michel Petit <petit.michel@gmail.com> 
+ * @license MIT
+ */
 class Login
 {
     protected $arr_part = array();
+    
     protected $int_minimum = 2;
+    
     protected $int_maximum = 15;
 
+
+
+    /**
+     * constructor. Generate couples letters internally. 
+     * 
+     * @access public
+     * @return void
+     */
     public function __construct()
     {
         $str_c = 'zrtpsdfghjklmwxcvbnq';
@@ -54,6 +73,13 @@ class Login
     }
 
 
+
+    /**
+     * Create one login 
+     * 
+     * @access public
+     * @return string
+     */
     public function generateOne()
     {
         $str_out = '';
@@ -67,8 +93,32 @@ class Login
     }
 
 
+
+    /**
+     * Create several logins at once.
+     * 
+     * @param integer $amount 
+     * @access public
+     * @return array
+     */
     public function generateMany($amount)
     {
+        if(!is_integer($amount) || $amount <= 0)
+        {
+            throw new \InvalidArgumentException('Amount must be a positive number.');
+        }
+
+        $arr_out = array();
+
+        while($int_count < $amount)
+        {
+            $arr_out[] = $this->generateOne();
+            $arr_out = array_unique($arr_out);
+
+            $int_count = count($arr_out);
+        }
+
+        return $arr_out;
     }
 }
 
