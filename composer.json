@@ -2,7 +2,7 @@
     "name": "malenki/fictif",
     "type": "library",
     "description": "Create virtual person to use into dev!",
-    "keywords": ["data","generator","person", 'email', 'name'],
+    "keywords": ["data","generator","person", "email", "name"],
     "homepage": "https://github.com/malenkiki/fictif",
     "license": "MIT",
     "authors": [
@@ -13,7 +13,8 @@
         }
     ],
     "require": {
-        "php": ">=5.3.0"
+        "php": ">=5.3.0",
+        "malenki/argile": "2.0"
     },
     "autoload": {
         "psr-0": {
