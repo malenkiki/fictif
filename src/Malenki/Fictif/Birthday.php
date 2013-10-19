@@ -23,9 +23,131 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 
+
 namespace Malenki\Fictif;
 
+
+
+/**
+ * Generate fake but valid birthday!
+ * 
+ * @author Michel Petit <petit.michel@gmail.com> 
+ * @license MIT
+ */
 class Birthday
 {
+    protected $year_range = null;
+
+
+
+    public function __construct()
+    {
+        $this->year_range = new \stdClass();
+        $this->year_range->min = 1900;
+        $this->year_range->max = (int) date('Y');
+    }
+
+
+
+    /**
+     * Define minimum year allowed. 
+     * 
+     * @param integer $int 
+     * @access public
+     * @return Birthday
+     */
+    public function minYear($int)
+    {
+        if($int < 1900)
+        {
+            throw new \InvalidArgumentException('Year must be after 1900');
+        }
+
+        $this->year_range->min = $int;
+
+        return $this;
+    }
+
+
+
+    /**
+     * Define maximum year to use. 
+     * 
+     * @param integer $int 
+     * @access public
+     * @return Birthday
+     */
+    public function maxYear($int)
+    {
+        if($int > (int) date('Y'))
+        {
+            throw new \InvalidArgumentException('Year must be before or equal to the current year');
+        }
+
+        $this->year_range->max = $int;
+
+        return $this;
+    }
+
+
+
+    /**
+     * Generate one birthdate. 
+     * 
+     * @access public
+     * @return \DateTime
+     */
+    public function generateOne()
+    {
+        $year = $month = $day = null;
+
+        while(!checkdate($month, $day, $year))
+        {
+            $year = rand($this->year_range->min, $this->year_range->max);
+
+            if($year == (int) date('Y'))
+            {
+                $month = rand(1, (int) date('n'));
+
+                if($month == (int) date('n'))
+                {
+                    $day = range(1, (int) date('j'));
+                }
+            }
+            else
+            {
+                $month = rand(1, 12);
+                $day = rand(1, 31);
+            }
+        }
+
+        return new \DateTime(sprintf('%04d-%02d-%02d', $year, $month, $day));
+    }
+
+
+
+    /**
+     * Create several birthdates. 
+     * 
+     * @param integer $amount 
+     * @access public
+     * @return array
+     */
+    public function generateMany($amount)
+    {
+        if(!is_integer($amount) || $amount <= 0)
+        {
+            throw new \InvalidArgumentException('Amount must be a positive number.');
+        }
+
+        $arr_out = array();
+
+        for($i = 0; $i < $amount; $i++)
+        {
+            $arr_out[] = $this->generateOne();
+        }
+        
+        return $arr_out;
+    }
 }
 
