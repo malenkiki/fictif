@@ -175,5 +175,58 @@ $opt->parse();
 
 $user = new User();
 
+if($opt->has('switchNoPassword'))
+{
+    $user->disablePassword();
+}
+
+if($opt->has('switchNoLogin'))
+{
+    $user->disableLogin();
+}
+
+if($opt->has('switchNoPassword'))
+{
+    $user->disablePassword();
+}
+
+
+if($opt->has('switchNoBirthday'))
+{
+    $user->disableBirthday();
+}
+
+if($opt->has('switchNoEmail'))
+{
+    $user->disableEmail();
+}
+
+if($opt->has('switchOnlyMen'))
+{
+    $user->firstName->onlyMen();
+}
+
+if($opt->has('switchOnlyWomen'))
+{
+    $user->firstName->onlyWomen();
+}
+
+
+
+
+if($opt->has('switchJson'))
+{
+    echo $user->exportManyToJson((int) $opt->get('amount'));
+}
+
+if($opt->has('switchPhp'))
+{
+    echo serialize($user->generateMany((int) $opt->get('amount')));
+}
+
+if($opt->has('switchCsv'))
+{
+    echo 'TODO'."\n";
+}
 exit();
 
