@@ -104,14 +104,36 @@ $opt->newValue('maxYear', 'block-birthday')
 
 $opt->newValue('minPassword', 'block-password')
     ->required()
-    ->long('min-password')
+    ->long('pwd-min-size')
     ->help('Smaller password string length allowed.')
     ;
 
 $opt->newValue('maxPassword', 'block-password')
     ->required()
-    ->long('max-password')
+    ->long('pwd-max-size')
     ->help('Greater password string length allowed.')
+    ;
+
+$opt->newValue('fixedPassword', 'block-password')
+    ->required()
+    ->long('pwd-one-size')
+    ->help('Give size for a unique size password.')
+    ;
+
+$opt->newValue('allowPassword', 'block-password')
+    ->required()
+    ->long('pwd-other')
+    ->help('Give some others characters to use in addition of characters used by default..')
+    ;
+
+$opt->newSwitch('lettersPassword', 'block-password')
+    ->long('pwd-only-letters')
+    ->help('The password must have only letters.')
+    ;
+
+$opt->newSwitch('digitsPassword', 'block-password')
+    ->long('pwd-only-digits')
+    ->help('The password must have only digits.')
     ;
 
 
