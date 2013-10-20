@@ -72,29 +72,71 @@ class User
 
 
 
+    public function disableLogin()
+    {
+        $this->login = null;
+    }
+
+
+
+    public function disableBirthday()
+    {
+        $this->birthday = null;
+    }
+
+
+
+    public function disablePassword()
+    {
+        $this->password = null;
+    }
+
+
+
+    public function disableEmail()
+    {
+        $this->email = null;
+    }
+
+
+
     public function generateOne()
     {
         $out = new \stdClass();
-        $out->login = $this->login->generateOne();
+
+        if($this->login)
+        {
+            $out->login = $this->login->generateOne();
+        }
+
         $out->name = new \stdClass();
         $out->name->first = $this->firstName->takeOne();
         $out->name->last = $this->lastName->takeOne();
-        
-        $birthday = $this->birthday->generateOne();
 
-        $out->birthday = new \stdClass();
-        $out->birthday->date = $birthday->format('Y-m-d');
-        $out->birthday->year = (int) $birthday->format('Y');
-        $out->birthday->month = (int) $birthday->format('n');
-        $out->birthday->day = (int) $birthday->format('j');
+        if($this->birthday)
+        {
+            $birthday = $this->birthday->generateOne();
 
-        $str_password = $this->password->generateOne();
+            $out->birthday = new \stdClass();
+            $out->birthday->date = $birthday->format('Y-m-d');
+            $out->birthday->year = (int) $birthday->format('Y');
+            $out->birthday->month = (int) $birthday->format('n');
+            $out->birthday->day = (int) $birthday->format('j');
+        }
 
-        $out->password = new \stdClass();
-        $out->password->original = $str_password;
-        $out->password->md5 = md5($str_password);
+        if($this->password)
+        {
+            $str_password = $this->password->generateOne();
 
-        $out->email = $this->email->generateOne();
+            $out->password = new \stdClass();
+            $out->password->original = $str_password;
+            $out->password->md5 = md5($str_password);
+        }
+
+        if($this->email)
+        {
+            $out->email = $this->email->generateOne();
+        }
 
         return $out;
     }
