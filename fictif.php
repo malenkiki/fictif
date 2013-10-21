@@ -49,6 +49,7 @@ $opt->flexible();
 
 $opt->addGroup('block-disable', 'Disable some features');
 $opt->addGroup('block-birthday', 'Birthday options');
+$opt->addGroup('block-email', 'Email options');
 $opt->addGroup('block-password', 'Password options');
 $opt->addGroup('block-output', 'Output options');
 
@@ -97,6 +98,33 @@ $opt->newValue('maxYear', 'block-birthday')
     ->required()
     ->long('max-year')
     ->help('Greater year allowed for birthday, into 4 digits. It cannot be greater than current year.', 'YYYY')
+    ;
+
+
+
+
+$opt->newValue('emailAddDomain', 'block-email')
+    ->required()
+    ->long('eml-add-domains')
+    ->help('Add new domain\'s names to defaults. Separate them by comma.', 'LIST')
+    ;
+
+$opt->newValue('emailAddExt', 'block-email')
+    ->required()
+    ->long('eml-add-exts')
+    ->help('Add new extensions to defaults. Separate each extensions by a comma.', 'LIST')
+    ;
+
+$opt->newValue('emailSetDomain', 'block-email')
+    ->required()
+    ->long('eml-set-domain')
+    ->help('Use only one domain NAME', 'NAME')
+    ;
+
+$opt->newValue('emailSetExt', 'block-email')
+    ->required()
+    ->long('eml-set-ext')
+    ->help('Use only one extension EXT', 'EXT')
     ;
 
 
@@ -212,7 +240,27 @@ if($opt->has('switchOnlyWomen'))
 }
 
 
+if($opt->has('emailAddDomain'))
+{
+    // TODO: make some tests
+    $user->email->allowThisDomain(explode(',', $opt->get('emailAddDomain')));
+}
 
+if($opt->has('emailAddExt'))
+{
+    // TODO: make some tests
+    $user->email->allowThisExt(explode(',', $opt->get('emailAddExt')));
+}
+
+if($opt->has('emailSetDomain'))
+{
+    $user->email->setDomain($opt->get('emailSetDomain'));
+}
+
+if($opt->has('emailSetExt'))
+{
+    $user->email->setExt($opt->get('emailSetExt'));
+}
 
 if($opt->has('switchJson'))
 {
