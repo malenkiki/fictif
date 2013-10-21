@@ -188,7 +188,7 @@ $opt->newSwitch('switchPhp', 'block-output')
 $opt->newSwitch('switchCsv', 'block-output')
     ->short('c')
     ->long('csv')
-    ->help('Output result as CSV.')
+    ->help('Output result as CSV. Unlike JSON and PHP, you must provide "output" option too.')
     ;
 
 $opt->newValue('output', 'block-output')
@@ -274,7 +274,47 @@ if($opt->has('switchPhp'))
 
 if($opt->has('switchCsv'))
 {
-    echo 'TODO'."\n";
+    if(!$opt->has('output'))
+    {
+        echo "\nError, with 'CSV option', you must provide a filename with 'output' option.\n";
+        exit(1);
+    }
+
+    $f = fopen($opt->get('output'), 'w');
+    $arr = $user->generateMany((int) $opt->get('amount'));
+
+    foreach($arr as $item)
+    {
+        $data = array();
+
+        if(isset($item->login))
+        {
+            $data['login'] = $item->login;
+        }
+
+        $data['first_name'] = $item->name->first;
+        $data['last_name'] = $item->name->last;
+
+        if(isset($item->birthday))
+        {
+            $data['birthday'] = $item->birthday->date;
+        }
+
+        if(isset($item->password))
+        {
+            $data['original_password'] = $item->password->original;
+            $data['md5_password'] = $item->password->md5;
+        }
+
+        if(isset($item->email))
+        {
+            $data['email'] = $item->email;
+        }
+
+        fputcsv($f, $data);
+    }
+
+    fclose($f);
 }
 exit();
 
