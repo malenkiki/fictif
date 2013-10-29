@@ -24,20 +24,27 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 namespace Malenki\Fictif;
 
-include('vendor/malenki/argile/src/Malenki/Argile/Arg.php');
-include('vendor/malenki/argile/src/Malenki/Argile/Options.php');
+define('DS', DIRECTORY_SEPARATOR);
+define('ARGILE_PATH', __DIR__ . DS . 'vendor'.DS.'malenki'.DS.'argile'.DS.'src'.DS.'Malenki'.DS.'Argile'.DS);
+define('FICTIF_PATH', __DIR__ . DS . 'src'.DS.'Malenki'.DS.'Fictif'.DS);
 
-include('src/Malenki/Fictif/Password.php');
-include('src/Malenki/Fictif/Login.php');
-include('src/Malenki/Fictif/FirstName.php');
-include('src/Malenki/Fictif/LastName.php');
-include('src/Malenki/Fictif/Birthday.php');
-include('src/Malenki/Fictif/Email.php');
-include('src/Malenki/Fictif/User.php');
+include(ARGILE_PATH . 'Arg.php');
+include(ARGILE_PATH . 'Options.php');
+
+include(FICTIF_PATH . 'Password.php');
+include(FICTIF_PATH . 'Login.php');
+include(FICTIF_PATH . 'FirstName.php');
+include(FICTIF_PATH . 'LastName.php');
+include(FICTIF_PATH . 'Birthday.php');
+include(FICTIF_PATH . 'Email.php');
+include(FICTIF_PATH . 'User.php');
 
 
 use Malenki\Argile\Arg as Arg;
 use Malenki\Argile\Options as Options;
+
+
+date_default_timezone_set('UTC');
 
 
 $opt = Options::getInstance();
@@ -264,12 +271,30 @@ if($opt->has('emailSetExt'))
 
 if($opt->has('switchJson'))
 {
-    echo $user->exportManyToJson((int) $opt->get('amount'));
+    $str_json = $user->exportManyToJson((int) $opt->get('amount'));
+
+    if($opt->has('output'))
+    {
+        file_put_contents($opt->get('output'), $str_json);
+    }
+    else
+    {
+        echo $str_json;
+    }
 }
 
 if($opt->has('switchPhp'))
 {
-    echo serialize($user->generateMany((int) $opt->get('amount')));
+    $str_php = serialize($user->generateMany((int) $opt->get('amount')));
+
+    if($opt->has('output'))
+    {
+        file_put_contents($opt->get('output'), $str_php);
+    }
+    else
+    {
+        echo $str_php;
+    }
 }
 
 if($opt->has('switchCsv'))
