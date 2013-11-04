@@ -49,6 +49,8 @@ date_default_timezone_set('UTC');
 
 $opt = Options::getInstance();
 
+$opt->description('Create fake poeple to populate some database, website or any other app you want while developing it. Fictif is the "Lorem ipsum" for data!');
+$opt->version('Fictif CLI version 0.9');
 
 $opt->flexible();
 

@@ -1,7 +1,7 @@
 {
     "name": "malenki/fictif",
     "type": "library",
-    "description": "Create virtual person to use into dev!",
+    "description": "Create virtual people to use into dev DB!",
     "keywords": ["data","generator","person", "email", "name"],
     "homepage": "https://github.com/malenkiki/fictif",
     "license": "MIT",
