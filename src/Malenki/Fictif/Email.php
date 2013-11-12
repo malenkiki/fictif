@@ -129,7 +129,7 @@ class Email
         }
         else
         {
-            throw new \InvalidArgumentException('Blahblah to do');
+            throw new \InvalidArgumentException('A domain must be a valid string.');
         }
 
         return $this;
@@ -152,7 +152,7 @@ class Email
         }
         else
         {
-            throw new \InvalidArgumentException('Blahblah to do');
+            throw new \InvalidArgumentException('Extension must be a valid string.');
         }
 
         return $this;

@@ -222,12 +222,6 @@ if($opt->has('switchNoLogin'))
     $user->disableLogin();
 }
 
-if($opt->has('switchNoPassword'))
-{
-    $user->disablePassword();
-}
-
-
 if($opt->has('switchNoBirthday'))
 {
     $user->disableBirthday();
@@ -249,6 +243,33 @@ if($opt->has('switchOnlyWomen'))
 }
 
 
+if($opt->has('minYear'))
+{
+    try
+    {
+        $user->birthday->minYear($opt->get('minYear'));
+    }
+    catch(\InvalidArgumentException $e)
+    {
+        fwrite(STDERR, $e->getMessage() . "\n");
+        exit(1);
+    }
+}
+
+if($opt->has('maxYear'))
+{
+    try
+    {
+        $user->birthday->maxYear($opt->get('maxYear'));
+    }
+    catch(\InvalidArgumentException $e)
+    {
+        fwrite(STDERR, $e->getMessage() . "\n");
+        exit(1);
+    }
+}
+
+
 if($opt->has('emailAddDomain'))
 {
     // TODO: make some tests
@@ -263,12 +284,54 @@ if($opt->has('emailAddExt'))
 
 if($opt->has('emailSetDomain'))
 {
-    $user->email->setDomain($opt->get('emailSetDomain'));
+    try
+    {
+        $user->email->setDomain($opt->get('emailSetDomain'));
+    }
+    catch(\InvalidArgumentException $e)
+    {
+        fwrite(STDERR, $e->getMessage());
+        exit(1);
+    }
 }
 
 if($opt->has('emailSetExt'))
 {
-    $user->email->setExt($opt->get('emailSetExt'));
+    try
+    {
+        $user->email->setExt($opt->get('emailSetExt'));
+    }
+    catch(\InvalidArgumentException $e)
+    {
+        fwrite(STDERR, $e->getMessage());
+        exit(1);
+    }
+}
+
+if($opt->has('minPassword'))
+{
+    try
+    {
+        $user->password->minimum($opt->get('minPassword'));
+    }
+    catch(\InvalidArgumentException $e)
+    {
+        fwrite(STDERR, $e->getMessage());
+        exit(1);
+    }
+}
+
+if($opt->has('maxPassword'))
+{
+    try
+    {
+        $user->password->maximum($opt->get('maxPassword'));
+    }
+    catch(\InvalidArgumentException $e)
+    {
+        fwrite(STDERR, $e->getMessage());
+        exit(1);
+    }
 }
 
 if($opt->has('switchJson'))
