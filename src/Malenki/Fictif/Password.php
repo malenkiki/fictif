@@ -75,7 +75,7 @@ class Password
     {
         if(!is_integer($int) || $int <= 0)
         {
-            throw new \InvalidArgumentException('Minimum size must be a positive number');
+            throw new \InvalidArgumentException('Minimum size for password must be a positive number');
         }
 
         $this->int_minimum = $int;
@@ -95,12 +95,12 @@ class Password
     {
         if(!is_integer($int) || $int < $this->int_minimum)
         {
-            throw new \InvalidArgumentException('Maximum size must be greater than minimum size.');
+            throw new \InvalidArgumentException('Maximum size for password must be greater than minimum size.');
         }
 
         if($int <= 0)
         {
-            throw new \InvalidArgumentException('Maximum size must be a positive number');
+            throw new \InvalidArgumentException('Maximum size for password must be a positive number');
         }
 
         $this->int_maximum = $int;
@@ -123,7 +123,7 @@ class Password
     {
         if(!is_integer($int) || $int <= 0)
         {
-            throw new \InvalidArgumentException('Fixed size must be a positive number.');
+            throw new \InvalidArgumentException('Fixed size of a password must be a positive number.');
         }
 
         $this->int_minimum = $int;
@@ -175,12 +175,12 @@ class Password
             }
             else
             {
-                throw new \InvalidArgumentException('Not null string is require.');
+                throw new \InvalidArgumentException('Adding allowed chars to password must be done with not null string.');
             }
         }
         else
         {
-            throw new \InvalidArgumentException('Scalar values or array of scalars only.');
+            throw new \InvalidArgumentException('Adding allowed chars to password : scalar values or array of scalars only.');
         }
 
         return $this;

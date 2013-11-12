@@ -312,7 +312,7 @@ if($opt->has('minPassword'))
 {
     try
     {
-        $user->password->minimum($opt->get('minPassword'));
+        $user->password->minimum((integer) $opt->get('minPassword'));
     }
     catch(\InvalidArgumentException $e)
     {
@@ -325,13 +325,49 @@ if($opt->has('maxPassword'))
 {
     try
     {
-        $user->password->maximum($opt->get('maxPassword'));
+        $user->password->maximum((integer) $opt->get('maxPassword'));
     }
     catch(\InvalidArgumentException $e)
     {
         fwrite(STDERR, $e->getMessage());
         exit(1);
     }
+}
+
+if($opt->has('fixedPassword'))
+{
+    try
+    {
+        $user->password->fixedSize((integer) $opt->get('fixedPassword'));
+    }
+    catch(\InvalidArgumentException $e)
+    {
+        fwrite(STDERR, $e->getMessage());
+        exit(1);
+    }
+}
+
+if($opt->has('allowPassword'))
+{
+    try
+    {
+        $user->password->allowThis($opt->get('allowPassword'));
+    }
+    catch(\InvalidArgumentException $e)
+    {
+        fwrite(STDERR, $e->getMessage());
+        exit(1);
+    }
+}
+
+if($opt->has('lettersPassword'))
+{
+    $user->password->onlyLetters();
+}
+
+if($opt->has('digitsPassword'))
+{
+    $user->password->onlyDigits();
 }
 
 if($opt->has('switchJson'))
