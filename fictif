@@ -1,3 +1,4 @@
+#!/usr/bin/env php
 <?php
 /*
 Copyright (c) 2013 Michel Petit <petit.michel@gmail.com>
@@ -24,30 +25,14 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 namespace Malenki\Fictif;
 
-define('DS', DIRECTORY_SEPARATOR);
-define('ARGILE_PATH', __DIR__ . DS . 'vendor'.DS.'malenki'.DS.'argile'.DS.'src'.DS.'Malenki'.DS.'Argile'.DS);
-define('FICTIF_PATH', __DIR__ . DS . 'src'.DS.'Malenki'.DS.'Fictif'.DS);
-
-include(ARGILE_PATH . 'Arg.php');
-include(ARGILE_PATH . 'Options.php');
-
-include(FICTIF_PATH . 'Password.php');
-include(FICTIF_PATH . 'Login.php');
-include(FICTIF_PATH . 'FirstName.php');
-include(FICTIF_PATH . 'LastName.php');
-include(FICTIF_PATH . 'Birthday.php');
-include(FICTIF_PATH . 'Email.php');
-include(FICTIF_PATH . 'User.php');
-
-
-use Malenki\Argile\Arg as Arg;
-use Malenki\Argile\Options as Options;
-
+(@include_once __DIR__ . '/vendor/autoload.php') || @include_once __DIR__ . '/../../autoload.php';
 
 date_default_timezone_set('UTC');
 
+set_time_limit(0);
 
-$opt = Options::getInstance();
+
+$opt = \Malenki\Argile\Options::getInstance();
 
 $opt->description('Create fake poeple to populate some database, website or any other app you want while developing it. Fictif is the "Lorem ipsum" for data!');
 $opt->version('Fictif CLI version 0.9');
