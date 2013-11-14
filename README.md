@@ -4,7 +4,15 @@ Create random fictive people or some of their informations to use as fake data.
 
 ## Use Only The Classes
 
-In order to generate what you want, into the more simple way, I have design this library into several small parts. So, if you want only generate fake passwordq, you can.
+In order to generate what you want, into the more simple way, I have design this library into several small parts. So, if you want only generate fake passwords, you can.
+
+To use my classes into your own project, the best way is to use [composer](http://getcomposer.org/). So, edit your `composer.json`and add this into require packages:
+
+```json
+"require": {
+    "malenki/fictif": "dev-master"
+}
+```
 
 ### Birthday Class
 
@@ -56,13 +64,23 @@ TODO
 
 ## Use The CLI App
 
-Before using the CLI app, be sure you have PHP CLI and [composer](http://getcomposer.org/) installed on your system, and then, go to the root projects to execute this:
+Before using the CLI app, be sure you have PHP CLI and [composer](http://getcomposer.org/) installed on your system.
+
+Download the source code of this project, or just git clone it.
+
+```bash
+git clone https://github.com/malenkiki/fictif.git
+```
+
+Then, go to the root projects to execute this:
 
 ```
 composer install
 ```
 
-After that, you can do a simple `php fictif.php` to have the list of all available options.
+After that, you can do a simple `./fictif` to have the list of all available options. I think that help available into this CLI script is enough, no need to do more blahblah here ;-)
 
 Try it, you can output result as __JSON__, __serialized PHP__ or __CSV__.
+
+Enjoy creating fake people!
 
