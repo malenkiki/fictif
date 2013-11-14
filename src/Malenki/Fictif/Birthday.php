@@ -111,7 +111,7 @@ class Birthday
 
                 if($month == (int) date('n'))
                 {
-                    $day = range(1, (int) date('j'));
+                    $day = rand(1, (int) date('j'));
                 }
             }
             else
