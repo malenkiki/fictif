@@ -1896,6 +1896,12 @@ class FirstName
 
 
 
+    /**
+     * Will take only women's firstname(s). 
+     * 
+     * @access public
+     * @return FirstName
+     */
     public function onlyWomen()
     {
         $this->str_type = 'w';
@@ -1904,6 +1910,12 @@ class FirstName
 
 
 
+    /**
+     * Will use only men's firstname(s).
+     * 
+     * @access public
+     * @return FirstName
+     */
     public function onlyMen()
     {
         $this->str_type = 'm';
@@ -1912,11 +1924,19 @@ class FirstName
 
 
 
+    /**
+     * Will use only firstnames that can be used for women and men. 
+     * 
+     * @access public
+     * @return FirstName
+     */
     public function onlyBoth()
     {
         $this->str_type = 'x';
         return $this;
     }
+
+
 
     private function getType()
     {
@@ -1930,6 +1950,8 @@ class FirstName
 
         return $type;
     }
+
+
 
     /**
      * @param int $amount 
@@ -1968,5 +1990,12 @@ class FirstName
     public function takeMany($amount = 10)
     {
         return $this->random($amount);
+    }
+
+
+
+    public function __toString()
+    {
+        return $this->takeOne();
     }
 }

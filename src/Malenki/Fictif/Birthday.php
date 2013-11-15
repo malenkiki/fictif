@@ -149,5 +149,18 @@ class Birthday
         
         return $arr_out;
     }
+
+
+
+    /**
+     * In string context, outputs one date formated as follow: 'YYYY-MM-DD' 
+     * 
+     * @access public
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->generateOne()->format('Y-m-d');
+    }
 }
 

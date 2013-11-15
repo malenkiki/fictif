@@ -120,5 +120,12 @@ class Login
 
         return $arr_out;
     }
+
+
+
+    public function __toString()
+    {
+        return $this->generateOne();
+    }
 }
 

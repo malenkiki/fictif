@@ -665,7 +665,9 @@ class LastName
     {
         return self::$arr_last_name[array_rand(self::$arr_last_name)];
     }
-    
+
+
+
     public function takeMany($amount = 10)
     {
         $arr_out = array();
@@ -676,6 +678,13 @@ class LastName
         }
 
         return $arr_out;
+    }
+
+
+
+    public function __toString()
+    {
+        return $this->takeOne();
     }
 }
 

@@ -262,5 +262,18 @@ class Password
         
         return $arr_out;
     }
+
+
+
+    /**
+     * In string context, generates one password. 
+     * 
+     * @access public
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->generateOne();
+    }
 }
 

@@ -248,5 +248,18 @@ class Email
 
         return $arr_out;
     }
+
+
+
+    /**
+     * Generate one email string if in string context. 
+     * 
+     * @access public
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->generateOne();
+    }
 }
 
