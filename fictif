@@ -27,6 +27,11 @@ namespace Malenki\Fictif;
 
 (@include_once __DIR__ . '/vendor/autoload.php') || @include_once __DIR__ . '/../../autoload.php';
 
+if(phpversion() >= '5.5.0')
+{
+    cli_set_process_title('fictif');
+}
+
 date_default_timezone_set('UTC');
 
 set_time_limit(0);
