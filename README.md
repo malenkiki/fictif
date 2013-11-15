@@ -21,6 +21,8 @@ Creating birthday dates is very simple. By default, this class can generate date
 ```php
 $bd = new \Malenki\Fictif\Birthday();
 echo $bd->generateOne()->format('Y-m-d');
+// you can use the object in string context too, in this case, the date will be 'YYYY-MM-DD'
+echo $bd;
 ```
 
 If you want, you can set minimal year and/or maximal year.
@@ -57,7 +59,52 @@ TODO
 TODO
 
 ### Password Class
-TODO
+
+Password Class allows you to play with length and characters.
+
+You can give a minimal and/or maximal length:
+
+``` php
+$p = new \Malenki\Fictif\Password();
+$p->minimal(5)->maximal(15);
+echo $p->generateOne();
+```
+
+If not set by you, the min/max are 5 and 20.
+
+You can set the length to have always the same numbers of chars too:
+
+```php
+$p = new \Malenki\Fictif\Password();
+$p->fixedSize(4);
+echo $p->generateOne();
+// you can do that too:
+echo $p;
+```
+
+You can add some characters…
+
+```php
+$p = new \Malenki\Fictif\Password();
+$p->allowThis('-_/^$&');
+echo $p;
+```
+
+or just use letters…
+
+```php
+$p = new \Malenki\Fictif\Password();
+$p->onlyLetters();
+echo $p;
+```
+
+or just digits, as you want!
+
+```php
+$p = new \Malenki\Fictif\Password();
+$p->onlyDigits();
+echo $p
+```
 
 ### Putting it all together: The User Class
 TODO
