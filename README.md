@@ -102,6 +102,8 @@ foreach($arr as $k => $v)
 }
 ```
 
+The `LastName` class use only `takeOne()` and `takeMany()` methods, and works the same way as `FirstName` class, including the `__toString()` behavior too.
+
 ### Login Class
 TODO
 
