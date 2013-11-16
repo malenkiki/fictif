@@ -53,7 +53,54 @@ Simple, isn't it?
 TODO
 
 ### FirstName and LastName Classes
-TODO
+
+This classes have a lot of french samples of many origins, so, you can get a great variety of first and last names!
+
+Using `FirstName` class is very simple. To get one random firstname, do the following:
+
+```php
+$fn = new \Malenki\Fictif\FirstName();
+echo $fn->takeOne();
+// or just that in string context:
+echo $fn;
+```
+
+OK, but if you want femal firstnames only, you can do that:
+
+```php
+$fn = new \Malenki\Fictif\FirstName();
+$fn->onlyWomen();
+echo $fn->takeOne();
+```
+
+For men, without surprise:
+
+```php
+$fn = new \Malenki\Fictif\FirstName();
+$fn->onlyMen();
+echo $fn->takeOne();
+```
+
+For names that can be both for women or men:
+
+```php
+$fn = new \Malenki\Fictif\FirstName();
+$fn->onlyBoth();
+echo $fn->takeOne();
+```
+
+You can generate several at once too:
+
+```php
+$fn = new \Malenki\Fictif\FirstName();
+$fn->onlyWomen();
+$arr = $fn->takeMany(20);
+var_dump($arr);
+foreach($arr as $k => $v)
+{
+    printf('Firstname #%d: %s', $k + 1, $v);
+}
+```
 
 ### Login Class
 TODO
