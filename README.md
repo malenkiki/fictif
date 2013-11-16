@@ -102,10 +102,22 @@ foreach($arr as $k => $v)
 }
 ```
 
-The `LastName` class use only `takeOne()` and `takeMany()` methods, and works the same way as `FirstName` class, including the `__toString()` behavior too.
+The `LastName` class use only `takeOne()` and `takeMany()` methods, and works the same way as `FirstName` class, including the `toString()` behavior too.
 
 ### Login Class
-TODO
+
+This is very simple to use. Only two methods: `generateOne()` and `generateMany()`. As others classes, use the `toString()` behavior too.
+
+This class generate login commposed of pseudo syllabs.
+
+So, just for you, one example:
+
+```php
+$l = new \Malenki\Fictif\Login();
+echo $l->generateOne()
+//or just:
+echo $l;
+```
 
 ### Password Class
 
