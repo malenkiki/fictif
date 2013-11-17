@@ -213,5 +213,66 @@ After that, you can do a simple `./fictif` to have the list of all available opt
 
 Try it, you can output result as __JSON__, __serialized PHP__ or __CSV__.
 
+
+Following lines show you the `--help` option output:
+
+``` text
+pc18:fictif michel$ ./fictif --help
+Usage: fictif [OPTIONS]…
+Create fake poeple to populate some database, website or any other app you want
+while developing it. Fictif is the "Lorem ipsum" for data!
+
+
+Disable some features
+      --no-password          Do not create password
+      --no-login             Do not create login
+      --no-birthday          Do not create birthday
+      --no-email             Do not create email
+      --only-women           Create only women users.
+      --only-men             Create only men users.
+
+
+Birthday options
+      --min-year=YYYY        Smaller four-digits year allowed for birthday. It
+                             cannot be set before 1900.
+      --max-year=YYYY        Greater year allowed for birthday, into 4 digits.
+                             It cannot be greater than current year.
+
+
+Email options
+      --eml-add-domains=LIST Add new domain's names to defaults. Separate them
+                             by comma.
+      --eml-add-exts=LIST    Add new extensions to defaults. Separate each
+                             extensions by a comma.
+      --eml-set-domain=NAME  Use only one domain NAME
+      --eml-set-ext=EXT      Use only one extension EXT
+
+
+Password options
+      --pwd-min-size=VALUE   Smaller password string length allowed.
+      --pwd-max-size=VALUE   Greater password string length allowed.
+      --pwd-one-size=VALUE   Give size for a unique size password.
+      --pwd-other=VALUE      Give some others characters to use in addition of
+                             characters used by default..
+      --pwd-only-letters     The password must have only letters.
+      --pwd-only-digits      The password must have only digits.
+
+
+Output options
+  -n, --amount=VALUE         Users's quantity to create.
+  -j, --json                 Output result as JSON.
+  -p, --php                  Output result as serialized PHP code.
+  -c, --csv                  Output result as CSV. Unlike JSON and PHP, you must
+                             provide "output" option too.
+  -o, --output=FILE          File name into where the script writes its output
+                             result. No need to give extension too, this is done
+                             automatically
+
+
+  -h, --help                 Display this help message and exit
+      --version              Display version information and exit
+
+```
+
 Enjoy creating fake people!
 
