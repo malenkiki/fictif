@@ -50,7 +50,30 @@ Simple, isn't it?
 
 
 ### Email Class
-TODO
+
+This class is very flexible.
+
+By default, will take randomly domain and extension, the account is generated or can be set.
+
+So, domain and extension can be fixed (i.e. always the same at every generation), or you can put your sets too.
+
+```php
+$m = \Malenki\Fictif\Email();
+$m->allowThisDomain(array('one','other')); // add new available domains
+$m->allowThisExt(array('ru', 'jp')); // add some other extensions
+//OR, for only one choice:
+$m->setDomain('foo'); // will be always xxxx@foo.xx
+$m->setExt('fr'); // will be always xxxx@xxx.fr
+```
+
+Like for `Birthday` class, you have `generateOne()` and `generateMany()` methods.
+
+And, in string context, this class is like a string too.
+
+```php
+$m = new \Malenki\Fictif\Email();
+echo $m;
+```
 
 ### FirstName and LastName Classes
 
