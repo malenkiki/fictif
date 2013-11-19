@@ -16,12 +16,13 @@ To use my classes into your own project, the best way is to use [composer](http:
 
 ### Birthday Class
 
-Creating birthday dates is very simple. By default, this class can generate dates between 1900 and now, returning `DateTime` object.
+Creating birthday dates is very simple. By default, this class can generate dates between 1900 and now, returning `string.
 
 ```php
 $bd = new \Malenki\Fictif\Birthday();
-echo $bd->generateOne()->format('Y-m-d');
-// you can use the object in string context too, in this case, the date will be 'YYYY-MM-DD'
+$bd->format('d/m/Y'); // if not given, the date will be 'YYYY-MM-DD'
+echo $bd->generateOne();
+// you can use the object in string context too
 echo $bd;
 ```
 
@@ -31,7 +32,7 @@ If you want, you can set minimal year and/or maximal year.
 $bd = new \Malenki\Fictif\Birthday();
 $bd->minYear(1967);
 $bd->maxYear(1980);
-echo $bd->generateOne()->format('Y-m-d');
+echo $bd;
 ```
 
 You can generate one like seen into previous examples, or many dates.
@@ -43,7 +44,7 @@ $bd->maxYear(1980);
 $arr = $bd->generateMany(23);
 foreach($arr as $k => $v)
 {
-    printf('Date #%d: %s', $k + 1, $v->format('Y-m-d'));
+    printf('Date #%d: %s', $k + 1, $v);
 }
 ```
 Simple, isn't it?
