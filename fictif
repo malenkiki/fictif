@@ -361,6 +361,18 @@ if($opt->has('digitsPassword'))
     $user->password->onlyDigits();
 }
 
+if($opt->has('amount') && !($opt->has('switchJson') || $opt->has('switchPhp') || $opt->has('switchCsv')))
+{
+    fwrite(STDERR, "\nYou must give at least one format for the output!\n");
+    exit(1);
+}
+
+if(!$opt->has('amount') && ($opt->has('switchJson') || $opt->has('switchPhp') || $opt->has('switchCsv')))
+{
+    fwrite(STDERR, "\nYou must give amount of fictive people to output!\n");
+    exit(1);
+}
+
 if($opt->has('switchJson'))
 {
     $str_json = $user->exportManyToJson((int) $opt->get('amount'));
@@ -393,7 +405,7 @@ if($opt->has('switchCsv'))
 {
     if(!$opt->has('output'))
     {
-        echo "\nError, with 'CSV option', you must provide a filename with 'output' option.\n";
+        fwrite(STDERR, "\nError, with 'CSV option', you must provide a filename with 'output' option.\n");
         exit(1);
     }
 
