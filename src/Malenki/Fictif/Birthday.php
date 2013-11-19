@@ -37,6 +37,7 @@ namespace Malenki\Fictif;
 class Birthday
 {
     protected $year_range = null;
+    protected $str_format = 'Y-m-d';
 
 
 
@@ -45,6 +46,29 @@ class Birthday
         $this->year_range = new \stdClass();
         $this->year_range->min = 1900;
         $this->year_range->max = (int) date('Y');
+    }
+
+
+
+    /**
+     * Set the format of the output date time.
+     * 
+     * @param str $str 
+     * @access public
+     * @return Birthday
+     */
+    public function format($str)
+    {
+        if(!is_string($str) || strlen($str) == 0)
+        {
+            throw new \InvalidArgumentException(
+                'Birthday format must be a valid string!'
+            );
+        }
+
+        $this->str_format = $str;
+
+        return $this;
     }
 
 
@@ -95,7 +119,7 @@ class Birthday
      * Generate one birthdate. 
      * 
      * @access public
-     * @return \DateTime
+     * @return string
      */
     public function generateOne()
     {
@@ -121,7 +145,9 @@ class Birthday
             }
         }
 
-        return new \DateTime(sprintf('%04d-%02d-%02d', $year, $month, $day));
+        $dt = new \DateTime(sprintf('%04d-%02d-%02d', $year, $month, $day));
+
+        return $dt->format($this->str_format);
     }
 
 
@@ -153,14 +179,14 @@ class Birthday
 
 
     /**
-     * In string context, outputs one date formated as follow: 'YYYY-MM-DD' 
+     * In string context, outputs one formated date.
      * 
      * @access public
      * @return string
      */
     public function __toString()
     {
-        return $this->generateOne()->format('Y-m-d');
+        return $this->generateOne();
     }
 }
 

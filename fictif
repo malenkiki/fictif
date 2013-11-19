@@ -36,8 +36,9 @@ date_default_timezone_set('UTC');
 
 set_time_limit(0);
 
-
 $opt = \Malenki\Argile\Options::getInstance();
+
+$opt->usage("-n AMOUNT -j [OPTIONS]…\n-n AMOUNT -p [OPTIONS]…\n-n AMOUNT -c -o FILE [OPTIONS]…\n");
 
 $opt->description('Create fake poeple to populate some database, website or any other app you want while developing it. Fictif is the "Lorem ipsum" for data!');
 $opt->version('Fictif CLI version 0.9');

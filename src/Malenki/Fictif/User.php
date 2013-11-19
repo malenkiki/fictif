@@ -115,13 +115,15 @@ class User
 
         if($this->birthday)
         {
-            $birthday = $this->birthday->generateOne();
+            $birthday = $this->birthday->format('Y-m-d')->generateOne();
+
+            list($year, $month, $day) = explode('-', $birthday);
 
             $out->birthday = new \stdClass();
-            $out->birthday->date = $birthday->format('Y-m-d');
-            $out->birthday->year = (int) $birthday->format('Y');
-            $out->birthday->month = (int) $birthday->format('n');
-            $out->birthday->day = (int) $birthday->format('j');
+            $out->birthday->date = $birthday;
+            $out->birthday->year = (int) $year;
+            $out->birthday->month = (int) ltrim($month, '0');
+            $out->birthday->day = (int) ltrim($day, '0');
         }
 
         if($this->password)
