@@ -192,7 +192,34 @@ echo $p
 ```
 
 ### Putting it all together: The User Class
-TODO
+
+User class allows you to play with all previous classes together.
+
+Each of them can be accessed by property. So, for example, to customize password, you can do that:
+
+``` php
+$u = new \Malenki\Fictif\User();
+$u->password->onlyDigits();
+```
+
+Simple, no?
+
+But, if you want only some data, you can disable some of them by calling methods `disableX()` where X is the name of the property to disable. So, to disable login generator, just do:
+
+``` php
+$u = new \Malenki\Fictif\User();
+$u->disableLogin();
+```
+
+As other classes, `User` class has `generateOne()` and `generateMany()`, but no `toString()` feature, and `generateOne()` return `stdClass` object.
+
+Two other methods are avaible, to get __json__ output:
+
+```php
+$u = new \Malenki\Fictif\User();
+$u->exportOneToJson(); // to have only one user
+$u->exportManyToJson(10); // to have ten users
+```
 
 ## Use The CLI App
 
