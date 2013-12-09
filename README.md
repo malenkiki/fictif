@@ -225,6 +225,7 @@ $u->exportManyToJson(10); // to have ten users
 
 Before using the CLI app, be sure you have PHP CLI and [composer](http://getcomposer.org/) installed on your system.
 
+### Git
 Download the source code of this project, or just git clone it.
 
 ```bash
@@ -236,6 +237,16 @@ Then, go to the root projects to execute this:
 ```
 composer install
 ```
+
+### Composer only
+
+You can use composer only
+
+```bash
+composer create-project malenki/fictif your-dir
+```
+
+### Usage
 
 After that, you can do a simple `./fictif` to have the list of all available options. I think that help available into this CLI script is enough, no need to do more blahblah here ;-)
 
