@@ -16,6 +16,7 @@
         "php": ">=5.3.0",
         "malenki/argile": "*"
     },
+    "bin": ["bin/fictif"],
     "autoload": {
         "psr-0": {
             "Malenki\\Fictif": "src/"
