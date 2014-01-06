@@ -27,7 +27,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 namespace Malenki\Fictif;
 
 
-
 /**
  * Generate fake but valid birthday!
  * 
@@ -46,8 +45,41 @@ class Birthday
         $this->year_range = new \stdClass();
         $this->year_range->min = 1900;
         $this->year_range->max = (int) date('Y');
+        $this->year_range->use_nd = false;
+        $this->year_range->nd = null;
     }
 
+
+    /**
+     * Use normal distribution (Gauss) to choose year. 
+     * 
+     * @param mixed $int_mean_year Mean year
+     * @param mixed $int_standard_deviation 
+     * @access public
+     * @return Birthday
+     */
+    public function normalDistribution($int_mean_year, $int_standard_deviation)
+    {
+        if(
+            $int_mean_year < $this->year_range->min
+            ||
+            $int_mean_year > $this->year_range->max
+        )
+        {
+            throw new \OutOfRangeException(
+                sprintf(
+                    'Mean year must be into te range [%d, %d]',
+                    $this->year_range->min,
+                    $this->year_range->max
+                )
+            );
+        }
+
+        $this->year_range->nd = new \Malenki\Math\NormalDistribution($int_mean_year, $int_standard_deviation);
+        $this->year_range->use_nd = true;
+
+        return $this;
+    }
 
 
     /**
@@ -127,7 +159,21 @@ class Birthday
 
         while(!checkdate($month, $day, $year))
         {
-            $year = rand($this->year_range->min, $this->year_range->max);
+            if($this->year_range->use_nd)
+            {
+                while(
+                    $year < $this->year_range->min
+                    ||
+                    $year > $this->year_range->max
+                )
+                {
+                    $year = (integer) round(array_pop($this->year_range->nd->samples(1)));
+                }
+            }
+            else
+            {
+                $year = rand($this->year_range->min, $this->year_range->max);
+            }
 
             if($year == (int) date('Y'))
             {
@@ -189,4 +235,3 @@ class Birthday
         return $this->generateOne();
     }
 }
-
