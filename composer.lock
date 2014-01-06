@@ -3,7 +3,7 @@
         "This file locks the dependencies of your project to a known state",
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "0b9b4676f8036760784e387b5f2ef71a",
+    "hash": "947024a399c2b3db8c42565967a138cf",
     "packages": [
         {
             "name": "malenki/argile",
@@ -91,6 +91,49 @@
                 "string"
             ],
             "time": "2013-11-03 16:12:29"
+        },
+        {
+            "name": "malenki/math",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/malenkiki/math.git",
+                "reference": "7033f76715c7e743c722b2eeec1ef8d0d785f946"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/malenkiki/math/zipball/7033f76715c7e743c722b2eeec1ef8d0d785f946",
+                "reference": "7033f76715c7e743c722b2eeec1ef8d0d785f946",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Malenki\\Math": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michel Petit",
+                    "email": "petit.michel@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Some mathematical stuff",
+            "homepage": "https://github.com/malenkiki/math",
+            "keywords": [
+                "math",
+                "probability",
+                "statistic"
+            ],
+            "time": "2014-01-05 23:06:52"
         }
     ],
     "packages-dev": [
@@ -100,9 +143,9 @@
 
     ],
     "minimum-stability": "stable",
-    "stability-flags": [
-
-    ],
+    "stability-flags": {
+        "malenki/math": 20
+    },
     "platform": {
         "php": ">=5.3.0"
     },
