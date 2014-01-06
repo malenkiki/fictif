@@ -90,6 +90,18 @@ $opt->newSwitch('switchOnlyMen', 'block-disable')
 
 
 
+$opt->newValue('meanYear', 'block-birthday')
+    ->required()
+    ->long('mean-year')
+    ->help('Four-digits mean year allowed for birthday, must be inside min year and max year.', 'YYYY')
+    ;
+
+$opt->newValue('stdYear', 'block-birthday')
+    ->required()
+    ->long('sigma-year')
+    ->help('Standard deviation, used only if mean year is set. If not given, default is 10.', 'NUMBER')
+    ;
+
 $opt->newValue('minYear', 'block-birthday')
     ->required()
     ->long('min-year')
@@ -261,6 +273,29 @@ if($opt->has('maxYear'))
         exit(1);
     }
 }
+
+if($opt->has('meanYear'))
+{
+    if($opt->has('stdYear'))
+    {
+        $std = (integer) $opt->get('stdYear');
+    }
+    else
+    {
+        $std = 10;
+    }
+
+    try
+    {
+        $user->birthday->normalDistribution($opt->get('meanYear'), $std);
+    }
+    catch(\Exception $e)
+    {
+        fwrite(STDERR, $e->getMessage() . "\n");
+        exit(1);
+    }
+}
+
 
 
 if($opt->has('emailAddDomain'))
