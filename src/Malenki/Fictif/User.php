@@ -31,6 +31,11 @@ namespace Malenki\Fictif;
 /**
  * Generate fake user(s) 
  * 
+ * @property-read $login Generated login
+ * @property-read $firstName Generated first name
+ * @property-read $lastName Generated last name
+ * @property-read $birthday Generated birth date
+ * @property-read $password Generated password
  * @author Michel Petit <petit.michel@gmail.com> 
  * @license MIT
  */
@@ -72,34 +77,72 @@ class User
 
 
 
+    /**
+     * Disables login generator.
+     * 
+     * @access public
+     * @return User
+     */
     public function disableLogin()
     {
         $this->login = null;
+
+        return $this;
     }
 
 
 
+    /**
+     * Disables birth date generator. 
+     * 
+     * @access public
+     * @return User
+     */
     public function disableBirthday()
     {
         $this->birthday = null;
+
+        return $this;
     }
 
 
 
+    /**
+     * Disables password generator.
+     * 
+     * @access public
+     * @return User
+     */
     public function disablePassword()
     {
         $this->password = null;
+
+        return $this;
     }
 
 
 
+    /**
+     * Disables email generator.
+     * 
+     * @access public
+     * @return User
+     */
     public function disableEmail()
     {
         $this->email = null;
+
+        return $this;
     }
 
 
 
+    /**
+     * Generates one user, with his available generator. 
+     * 
+     * @access public
+     * @return \stdClass
+     */
     public function generateOne()
     {
         $out = new \stdClass();
