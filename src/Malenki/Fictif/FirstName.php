@@ -22,7 +22,6 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-
 namespace Malenki\Fictif;
 
 class FirstName
@@ -1894,17 +1893,16 @@ class FirstName
 
     protected $str_type = null;
 
-
-
     /**
-     * Will take only women's firstname(s). 
-     * 
+     * Will take only women's firstname(s).
+     *
      * @access public
      * @return FirstName
      */
     public function onlyWomen()
     {
         $this->str_type = 'w';
+
         return $this;
     }
 
@@ -1912,49 +1910,44 @@ class FirstName
 
     /**
      * Will use only men's firstname(s).
-     * 
+     *
      * @access public
      * @return FirstName
      */
     public function onlyMen()
     {
         $this->str_type = 'm';
+
         return $this;
     }
 
-
-
     /**
-     * Will use only firstnames that can be used for women and men. 
-     * 
+     * Will use only firstnames that can be used for women and men.
+     *
      * @access public
      * @return FirstName
      */
     public function onlyBoth()
     {
         $this->str_type = 'x';
+
         return $this;
     }
-
-
 
     private function getType()
     {
         $arr_type = array_keys(self::$arr_first_name);
         $type = $arr_type[array_rand($arr_type)];
 
-        if($this->str_type)
-        {
+        if ($this->str_type) {
             $type = $this->str_type;
         }
 
         return $type;
     }
 
-
-
     /**
-     * @param int $amount 
+     * @param  int   $amount
      * @access private
      * @return array
      */
@@ -1962,8 +1955,7 @@ class FirstName
     {
         $arr_out = array();
 
-        for($i = 0; $i < $amount; $i++)
-        {
+        for ($i = 0; $i < $amount; $i++) {
             $type = $this->getType();
             $arr_out[] = self::$arr_first_name[$type][array_rand(self::$arr_first_name[$type])];
         }
@@ -1980,10 +1972,8 @@ class FirstName
         return array_pop($this->random());
     }
 
-
-
     /**
-     * @param int $amount 
+     * @param  int   $amount
      * @access public
      * @return array
      */
@@ -1991,8 +1981,6 @@ class FirstName
     {
         return $this->random($amount);
     }
-
-
 
     public function __toString()
     {

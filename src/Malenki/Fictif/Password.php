@@ -22,16 +22,12 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-
-
 namespace Malenki\Fictif;
 
-
-
 /**
- * Generate custom password 
- * 
- * Password can have minimum and maximum size, can use letters, digits, 
+ * Generate custom password
+ *
+ * Password can have minimum and maximum size, can use letters, digits,
  * together or not, with other custom chars…
  *
  * @author Michel Petit <petit.michel@gmail.com>
@@ -43,13 +39,11 @@ class Password
     protected $int_maximum = 20;
     protected $arr_allow = array();
 
-
-
     /**
      * Constructor.
      *
-     * Initialize default range of characters to generate password 
-     * 
+     * Initialize default range of characters to generate password
+     *
      * @access public
      * @return void
      */
@@ -62,67 +56,59 @@ class Password
         );
     }
 
-
-
     /**
      * Set custom minimum size for the password.
-     * 
-     * @param integer $int 
+     *
+     * @param  integer  $int
      * @access public
      * @return Password
      */
     public function minimum($int = 5)
     {
-        if(!is_integer($int) || $int <= 0)
-        {
+        if (!is_integer($int) || $int <= 0) {
             throw new \InvalidArgumentException('Minimum size for password must be a positive number');
         }
 
         $this->int_minimum = $int;
+
         return $this;
     }
 
-
-
     /**
      * Set custom maximum size for the password
-     * 
-     * @param integer $int 
+     *
+     * @param  integer  $int
      * @access public
      * @return Password
      */
     public function maximum($int = 20)
     {
-        if(!is_integer($int) || $int < $this->int_minimum)
-        {
+        if (!is_integer($int) || $int < $this->int_minimum) {
             throw new \InvalidArgumentException('Maximum size for password must be greater than minimum size.');
         }
 
-        if($int <= 0)
-        {
+        if ($int <= 0) {
             throw new \InvalidArgumentException('Maximum size for password must be a positive number');
         }
 
         $this->int_maximum = $int;
+
         return $this;
     }
-
-
 
     /**
      * Set fixed size for the password.
      *
-     * One single size only for the password, the same as setting minimum and 
-     * maximum size at the same value. 
-     * 
-     * @param integer $int 
+     * One single size only for the password, the same as setting minimum and
+     * maximum size at the same value.
+     *
+     * @param  integer  $int
      * @access public
      * @return Password
      */
     public function fixedSize($int)
     {
-        if(!is_integer($int) || $int <= 0)
-        {
+        if (!is_integer($int) || $int <= 0) {
             throw new \InvalidArgumentException('Fixed size of a password must be a positive number.');
         }
 
@@ -132,79 +118,61 @@ class Password
         return $this;
     }
 
-
-
     /**
      * Add other allowed characters to generate password.
      *
      * You can add other chars by array of chars or a string.
      *
-     * @param mixed $mix 
+     * @param  mixed    $mix
      * @access public
      * @return Password
      */
     public function allowThis($mix)
     {
-        if(is_array($mix))
-        {
-            foreach($mix as $item)
-            {
-                if(is_scalar($item))
-                {
-                    if(is_float($item) || is_bool($item))
-                    {
+        if (is_array($mix)) {
+            foreach ($mix as $item) {
+                if (is_scalar($item)) {
+                    if (is_float($item) || is_bool($item)) {
                         $item = (integer) $item;
                     }
                     $this->arr_allow[] = $item;
                 }
             }
-        }
-        elseif(is_scalar($mix))
-        {
-            if(is_float($mix) || is_bool($mix))
-            {
+        } elseif (is_scalar($mix)) {
+            if (is_float($mix) || is_bool($mix)) {
                 $mix = (integer) $mix;
             }
 
-            if(mb_strlen($mix))
-            {
-                for($i = 0; $i < mb_strlen($mix, 'UTF-8'); $i++)
-                {
+            if (mb_strlen($mix)) {
+                for ($i = 0; $i < mb_strlen($mix, 'UTF-8'); $i++) {
                     $this->arr_allow[] = mb_substr($mix, $i, 1, 'UTF-8');
                 }
-            }
-            else
-            {
+            } else {
                 throw new \InvalidArgumentException('Adding allowed chars to password must be done with not null string.');
             }
-        }
-        else
-        {
+        } else {
             throw new \InvalidArgumentException('Adding allowed chars to password : scalar values or array of scalars only.');
         }
 
         return $this;
     }
 
-
-
     /**
-     * The password will contain only digits. 
-     * 
+     * The password will contain only digits.
+     *
      * @access public
      * @return Password
      */
     public function onlyDigits()
     {
         $this->arr_allow = range(0, 9);
+
         return $this;
     }
 
-
-
     /**
-     * The password will contain only letters. 
-     * 
+     * The password will contain only letters.
+     *
      * @access public
      * @return Password
      */
@@ -214,14 +182,13 @@ class Password
             range('a', 'z'),
             range('A', 'Z')
         );
+
         return $this;
     }
 
-
-
     /**
-     * Generate one password string. 
-     * 
+     * Generate one password string.
+     *
      * @access public
      * @return string
      */
@@ -229,45 +196,38 @@ class Password
     {
         $str_out = '';
 
-        for($i = 0; $i < rand($this->int_minimum, $this->int_maximum); $i++)
-        {
+        for ($i = 0; $i < rand($this->int_minimum, $this->int_maximum); $i++) {
             $str_out .= $this->arr_allow[array_rand($this->arr_allow)];
         }
 
         return $str_out;
     }
 
-
-
     /**
-     * Generate several passwords returned into and array. 
-     * 
-     * @param integer $amount Number of password to generate
+     * Generate several passwords returned into and array.
+     *
+     * @param  integer $amount Number of password to generate
      * @access public
      * @return array
      */
     public function generateMany($amount)
     {
-        if(!is_integer($amount) || $amount <= 0)
-        {
+        if (!is_integer($amount) || $amount <= 0) {
             throw new \InvalidArgumentException('Amount must be a positive number.');
         }
 
         $arr_out = array();
 
-        for($i = 0; $i < $amount; $i++)
-        {
+        for ($i = 0; $i < $amount; $i++) {
             $arr_out[] = $this->generateOne();
         }
-        
+
         return $arr_out;
     }
 
-
-
     /**
-     * In string context, generates one password. 
-     * 
+     * In string context, generates one password.
+     *
      * @access public
      * @return string
      */
@@ -276,4 +236,3 @@ class Password
         return $this->generateOne();
     }
 }
-

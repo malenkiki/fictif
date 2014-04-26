@@ -22,48 +22,39 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-
-
 namespace Malenki\Fictif;
 
-
-
 /**
- * Generate fake user(s) 
- * 
+ * Generate fake user(s)
+ *
  * @property-read $login Generated login
  * @property-read $firstName Generated first name
  * @property-read $lastName Generated last name
  * @property-read $birthday Generated birth date
  * @property-read $password Generated password
- * @author Michel Petit <petit.michel@gmail.com> 
+ * @author Michel Petit <petit.michel@gmail.com>
  * @license MIT
  */
 class User
 {
     protected $login = null;
-    
+
     protected $firstName = null;
-    
+
     protected $lastName = null;
-    
+
     protected $birthday = null;
-    
+
     protected $password = null;
-    
+
     protected $email = null;
-
-
 
     public function __get($name)
     {
-        if(in_array($name, array('login', 'firstName', 'lastName', 'birthday', 'password', 'email')))
-        {
+        if (in_array($name, array('login', 'firstName', 'lastName', 'birthday', 'password', 'email'))) {
             return $this->$name;
         }
     }
-
-
 
     public function __construct()
     {
@@ -75,11 +66,9 @@ class User
         $this->email = new Email();
     }
 
-
-
     /**
      * Disables login generator.
-     * 
+     *
      * @access public
      * @return User
      */
@@ -90,11 +79,9 @@ class User
         return $this;
     }
 
-
-
     /**
-     * Disables birth date generator. 
-     * 
+     * Disables birth date generator.
+     *
      * @access public
      * @return User
      */
@@ -105,11 +92,9 @@ class User
         return $this;
     }
 
-
-
     /**
      * Disables password generator.
-     * 
+     *
      * @access public
      * @return User
      */
@@ -120,11 +105,9 @@ class User
         return $this;
     }
 
-
-
     /**
      * Disables email generator.
-     * 
+     *
      * @access public
      * @return User
      */
@@ -135,11 +118,9 @@ class User
         return $this;
     }
 
-
-
     /**
-     * Generates one user, with his available generator. 
-     * 
+     * Generates one user, with his available generator.
+     *
      * @access public
      * @return \stdClass
      */
@@ -147,8 +128,7 @@ class User
     {
         $out = new \stdClass();
 
-        if($this->login)
-        {
+        if ($this->login) {
             $out->login = $this->login->generateOne();
         }
 
@@ -156,8 +136,7 @@ class User
         $out->name->first = $this->firstName->takeOne();
         $out->name->last = $this->lastName->takeOne();
 
-        if($this->birthday)
-        {
+        if ($this->birthday) {
             $birthday = $this->birthday->format('Y-m-d')->generateOne();
 
             list($year, $month, $day) = explode('-', $birthday);
@@ -169,8 +148,7 @@ class User
             $out->birthday->day = (int) ltrim($day, '0');
         }
 
-        if($this->password)
-        {
+        if ($this->password) {
             $str_password = $this->password->generateOne();
 
             $out->password = new \stdClass();
@@ -178,42 +156,33 @@ class User
             $out->password->md5 = md5($str_password);
         }
 
-        if($this->email)
-        {
+        if ($this->email) {
             $out->email = $this->email->generateOne();
         }
 
         return $out;
     }
 
-
-
     public function generateMany($amount)
     {
-        if(!is_integer($amount) || $amount <= 0)
-        {
+        if (!is_integer($amount) || $amount <= 0) {
             throw new \InvalidArgumentException('Amount must be a positive number.');
         }
 
         $arr_out = array();
 
-        for($i = 0; $i < $amount; $i++)
-        {
+        for ($i = 0; $i < $amount; $i++) {
             $arr_out[] = $this->generateOne();
         }
-        
+
         return $arr_out;
     }
-
-
 
     public function exportOneToJson()
     {
         return json_encode($this->generateOne());
     }
-    
-    
-    
+
     public function exportManyToJson($amount)
     {
         return json_encode($this->generateMany($amount));

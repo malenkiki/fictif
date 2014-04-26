@@ -22,7 +22,6 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-
 namespace Malenki\Fictif;
 
 class LastName
@@ -659,32 +658,24 @@ class LastName
         'Zeitoun'
     );
 
-
-
     public function takeOne()
     {
         return self::$arr_last_name[array_rand(self::$arr_last_name)];
     }
 
-
-
     public function takeMany($amount = 10)
     {
         $arr_out = array();
 
-        for($i = 0; $i < $amount; $i++)
-        {
+        for ($i = 0; $i < $amount; $i++) {
             $arr_out[] = $this->takeOne();
         }
 
         return $arr_out;
     }
 
-
-
     public function __toString()
     {
         return $this->takeOne();
     }
 }
-

@@ -22,23 +22,18 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-
-
 namespace Malenki\Fictif;
-
 
 /**
  * Generate fake but valid birthday!
- * 
- * @author Michel Petit <petit.michel@gmail.com> 
+ *
+ * @author Michel Petit <petit.michel@gmail.com>
  * @license MIT
  */
 class Birthday
 {
     protected $year_range = null;
     protected $str_format = 'Y-m-d';
-
-
 
     public function __construct()
     {
@@ -49,12 +44,11 @@ class Birthday
         $this->year_range->nd = null;
     }
 
-
     /**
-     * Use normal distribution (Gauss) to choose year. 
-     * 
-     * @param mixed $int_mean_year Mean year
-     * @param mixed $int_standard_deviation 
+     * Use normal distribution (Gauss) to choose year.
+     *
+     * @param  mixed    $int_mean_year          Mean year
+     * @param  mixed    $int_standard_deviation
      * @access public
      * @return Birthday
      */
@@ -81,18 +75,16 @@ class Birthday
         return $this;
     }
 
-
     /**
      * Set the format of the output date time.
-     * 
-     * @param str $str 
+     *
+     * @param  str      $str
      * @access public
      * @return Birthday
      */
     public function format($str)
     {
-        if(!is_string($str) || strlen($str) == 0)
-        {
+        if (!is_string($str) || strlen($str) == 0) {
             throw new \InvalidArgumentException(
                 'Birthday format must be a valid string!'
             );
@@ -103,19 +95,16 @@ class Birthday
         return $this;
     }
 
-
-
     /**
-     * Define minimum year allowed. 
-     * 
-     * @param integer $int 
+     * Define minimum year allowed.
+     *
+     * @param  integer  $int
      * @access public
      * @return Birthday
      */
     public function minYear($int)
     {
-        if($int < 1900)
-        {
+        if ($int < 1900) {
             throw new \InvalidArgumentException('Year must be after 1900');
         }
 
@@ -124,19 +113,16 @@ class Birthday
         return $this;
     }
 
-
-
     /**
-     * Define maximum year to use. 
-     * 
-     * @param integer $int 
+     * Define maximum year to use.
+     *
+     * @param  integer  $int
      * @access public
      * @return Birthday
      */
     public function maxYear($int)
     {
-        if($int > (int) date('Y'))
-        {
+        if ($int > (int) date('Y')) {
             throw new \InvalidArgumentException('Year must be before or equal to the current year');
         }
 
@@ -145,11 +131,9 @@ class Birthday
         return $this;
     }
 
-
-
     /**
-     * Generate one birthdate. 
-     * 
+     * Generate one birthdate.
+     *
      * @access public
      * @return string
      */
@@ -157,10 +141,8 @@ class Birthday
     {
         $year = $month = $day = null;
 
-        while(!checkdate($month, $day, $year))
-        {
-            if($this->year_range->use_nd)
-            {
+        while (!checkdate($month, $day, $year)) {
+            if ($this->year_range->use_nd) {
                 while(
                     $year < $this->year_range->min
                     ||
@@ -169,23 +151,17 @@ class Birthday
                 {
                     $year = (integer) round(array_pop($this->year_range->nd->samples(1)));
                 }
-            }
-            else
-            {
+            } else {
                 $year = rand($this->year_range->min, $this->year_range->max);
             }
 
-            if($year == (int) date('Y'))
-            {
+            if ($year == (int) date('Y')) {
                 $month = rand(1, (int) date('n'));
 
-                if($month == (int) date('n'))
-                {
+                if ($month == (int) date('n')) {
                     $day = rand(1, (int) date('j'));
                 }
-            }
-            else
-            {
+            } else {
                 $month = rand(1, 12);
                 $day = rand(1, 31);
             }
@@ -196,37 +172,31 @@ class Birthday
         return $dt->format($this->str_format);
     }
 
-
-
     /**
-     * Create several birthdates. 
-     * 
-     * @param integer $amount 
+     * Create several birthdates.
+     *
+     * @param  integer $amount
      * @access public
      * @return array
      */
     public function generateMany($amount)
     {
-        if(!is_integer($amount) || $amount <= 0)
-        {
+        if (!is_integer($amount) || $amount <= 0) {
             throw new \InvalidArgumentException('Amount must be a positive number.');
         }
 
         $arr_out = array();
 
-        for($i = 0; $i < $amount; $i++)
-        {
+        for ($i = 0; $i < $amount; $i++) {
             $arr_out[] = $this->generateOne();
         }
-        
+
         return $arr_out;
     }
 
-
-
     /**
      * In string context, outputs one formated date.
-     * 
+     *
      * @access public
      * @return string
      */
